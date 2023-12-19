@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{%block contenido%}
+
+<div class="container d-flex flex-column justify-content-center align-items-center py-5">
+
+  <div class="bg-light rounded-lg h-25">
+    <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="LOGO" class="mb-4 rounded-circle border border-white shadow-lg" width="150" height="150">
+  </div>
+
+  <h1 class="display-4 text-center mb-4 text-primary">
+    {{ data['block']['register']['Name'] }}
+  </h1>
+
+  <p class="lead text-center mb-4 text-primary">
+    {{ data['block']['register']['Professional Career'] }}
+  </p>
+
+  <div class="row g-4">
+    {% for field in data['block']['register'] %}
+      {% if field != 'Name' and field != 'Professional Career' and field != 'email' and field != 'Role' %}
+        <div class="col-md-4 mb-4">
+          <div class="card bg-light shadow-sm rounded-3 h-100 overflow-hidden">
+            <div class="card-body">
+              <h5 class="card-title text-primary mb-3">{{ field | capitalize }}</h5>
+              <p class="card-text text-dark">{{ data['block']['register'][field] }}</p>
+              {% if field == 'Habilidades' %}
+                <span class="badge bg-primary rounded-pill float-end">Destacado</span>
+              {% endif %}
+            </div>
+            
+            <div id="collapse-{{ field }}" class="collapse">
+              </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  
+  
+
+  <div class="mt-5">
+    <h2 class="text-center text-primary mb-4">Firmas</h2>
+
+    {% for firma in firmas %}
+      <div class="card border-white rounded-pill shadow-lg mb-3 text-center">
+        <h5 class="card-title text-primary mb-0">{{ firma['block']['register']['RoleSign'] }}</h5>
+        <p class="card-text text-dark">{{ firma['block']['register']['Sign'] }}</p>
+      </div>
+    {% endfor %}
+
+  </div>
+
+</div>
+
+
+
+{% endblock %}

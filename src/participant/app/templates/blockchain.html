@@ -1,0 +1,36 @@
+{% extends "principal.html" %}
+
+{% block contenido %}
+  <div class="container mt-4">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h2 class="text-center">Blockchain Registers</h2>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table id="tablax" class="table table-striped table-bordered table-hover">
+            <thead class="text-center bg-info text-white">
+              <th>Block N°</th>
+              <th>Date and Time</th>
+              <th>Block Hash</th>
+              <th>Previous Hash</th>
+            </thead>
+            <tbody class="text-center">
+              {% for col in datablock %}
+                <tr>
+                  <td>{{ col['block']['metadata']['index'] }}</td>
+                  <td>{{ col['block']['metadata']['timestamp'] }}</td>
+                  <td>{{ col['hash1'] }}</td>
+                  <td>{{ col['block']['metadata']['previous_hash'] }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+
+

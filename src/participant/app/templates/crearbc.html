@@ -1,0 +1,138 @@
+{% extends "principal.html" %}
+
+{% block scrihadd %}
+<script>
+  'use strict';
+
+  window.addEventListener('load', function () {
+    var select = document.querySelector("#qtynodos");
+    var i = "";
+    var input = document.querySelector("#input");
+    var input1 = document.querySelector("#input1");
+    var input2 = document.querySelector("#input2");
+
+    select.addEventListener('change', function (e) {
+      e.preventDefault();
+      input.innerHTML = '';
+      input1.innerHTML = '';
+      input2.innerHTML = '';
+      for (i = 0; i < select.value; i++) {
+        createInputs();
+        createInputs1();
+        createInputs2();
+      }
+    });
+
+    function createInputs() {
+      var element = document.createElement('div');
+      element.innerHTML = `
+        <div class="form-inline">
+          <p class="mr-2">Node Name ${i + 1}:</p>
+          <input type="text" class="form-control" name="Nodo ${i + 1}" required>
+        </div>
+      `;
+      input.appendChild(element);
+    }
+
+    function createInputs1() {
+      var element = document.createElement('div');
+      element.innerHTML = `
+        <div class="form-inline">
+          <p class="mr-2">Function ${i + 1}:</p>
+          <select class="form-select" name="Function ${i + 1}" required>
+            <option value="Sign">Sign</option>
+            <option value="Create Block">Create Block</option>
+            <option value="Read">Read</option>
+            <option value="Sign and Create Block">Sign and Create Block</option>            
+          </select>
+        </div>
+      `;
+      input1.appendChild(element);
+    }
+
+    function createInputs2() {
+      var element = document.createElement('div');
+      element.innerHTML = `
+        <div class="form-inline">
+          <p class="mr-2">ROLE Node ${i + 1}:</p>
+          <b><input class="form-control" name="ROLE Node ${i + 1}" value="Nodo Peer" readonly></b>
+        </div>
+      `;
+      input2.appendChild(element);
+    }
+  });
+</script>"
+{% endblock %}
+
+{% block contenido %}
+<div class="container w-75">
+  <form class="row g-3 m-auto py-3" method="POST">
+    <div class="col-md-8">
+      <label for="blockchainName" class="form-label">Blockchain Network Name</label>
+      <input type="text" class="form-control" name="NetworkName" id="blockchainName" required>
+    </div>
+    <div class="col-md-4">
+      <label for="qtynodos" class="form-label">Number of Participants</label>
+      <select id="qtynodos" class="form-select" name="qtynodos" required>
+        <option value="0">Select a quantity</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+        <option value="4">Four</option>
+        <option value="5">Five</option>
+      </select>
+    </div>
+    <div class="col-12">
+      <label for="privateNetworkDomain" class="form-label">Private Network Domain</label>
+      <input type="text" class="form-control" name="DNS" id="privateNetworkDomain" required>
+    </div>
+
+    <div class="col-md-4" id="input">
+    </div>
+
+    <div class="col-md-4" id="input1">
+    </div>
+    <div class="col-md-4" id="input2">
+    </div>
+    <div class="col-12">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" required>
+        <label class="form-check-label" for="acceptTerms">
+          I accept that I have correctly configured the blockchain network
+        </label>
+      </div>
+    </div>
+    <div class="col-12">
+      <button class="btn btn-primary" type="submit">Create Network</button>
+    </div>
+  </form>
+</div>
+
+
+  {% block diploma %}{% endblock %}
+  {% block bdblock %}
+  <div class="container my-3 p-4">
+    <table id="tablax" class="table table-striped table-bordered" style="width:100%">
+      <thead>
+        <tr>
+    <th>Block N°</th>
+          <th>Date and Time</th>
+          <th>Block Hash</th>
+          <th>Previous Hash</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for col in datablock %}
+        <tr>
+          <td>{{ col['block']['metadata']['index'] }}</td>
+          <td>{{ col['block']['metadata']['timestamp'] }}</td>
+          <td>{{ col['hash1'] }}</td>
+          <td>{{ col['metadata']['previous_hash'] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
+  {% endblock %}
+{% endblock %}
